@@ -101,11 +101,6 @@ public class RestaurantDao {
 			}
 		}
 
-		if (rest == null) {
-			System.out.println("NOT FOUND");
-			throw new ApplicationException("Restaurant does not exist");
-		}
-
 		return rest;
 	}
 

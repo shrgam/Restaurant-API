@@ -91,10 +91,7 @@ public class MenuDao {
 			}
 		}
 
-		if (menu == null) {
-			System.out.println("NOT FOUND");
-			throw new ApplicationException("Menu does not exist");
-		}
+		
 
 		return menu;
 	}

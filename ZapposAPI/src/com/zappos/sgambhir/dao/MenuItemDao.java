@@ -89,10 +89,6 @@ public class MenuItemDao {
 			}
 		}
 
-		if (item == null) {
-			System.out.println("NOT FOUND");
-			throw new ApplicationException("Item does not exist");
-		}
 
 		return item;
 	}

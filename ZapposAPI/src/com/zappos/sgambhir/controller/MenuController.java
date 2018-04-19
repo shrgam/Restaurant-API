@@ -14,6 +14,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import com.zappos.sgambhir.exceptions.ApplicationException;
 import com.zappos.sgambhir.dao.MenuItemDao;
 import com.zappos.sgambhir.dao.MenuDao;
 import com.zappos.sgambhir.model.Menu;
@@ -30,10 +31,10 @@ public class MenuController {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getMenu(@PathParam("menuId") int menuId) throws Exception {
 		Menu result = menuDao.getMenu(menuId);
-		if (result != null) {
+		if (result == null) {
+						throw new ApplicationException("Item does not exist");
+					}		
 			return Response.status(Response.Status.OK).entity(result).build();
-		}
-		return Response.status(Response.Status.BAD_REQUEST).build();
 	}
 
 	@GET
@@ -42,10 +43,10 @@ public class MenuController {
 	public Response getMenuItems(@PathParam("menuId") int menuId)
 			throws Exception {
 		List<MenuItem> result = menuItemDao.getAllMenuItemsForMenu(menuId);
-		if (result != null) {
-			return Response.status(Response.Status.OK).entity(result).build();
-		}
-		return Response.status(Response.Status.BAD_REQUEST).build();
+		if (result == null) {
+			throw new ApplicationException("Item does not exist");
+		}	
+		return Response.status(Response.Status.OK).entity(result).build();
 	}
 
 	@POST

@@ -1,6 +1,7 @@
 package com.zappos.sgambhir.controller;
 
 import java.util.List;
+
 import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -14,8 +15,10 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+
 import com.zappos.sgambhir.dao.MenuDao;
 import com.zappos.sgambhir.dao.RestaurantDao;
+import com.zappos.sgambhir.exceptions.ApplicationException;
 import com.zappos.sgambhir.model.Menu;
 import com.zappos.sgambhir.model.Restaurant;
 
@@ -40,10 +43,13 @@ public class RestaurantController {
 	public Response getRestaurant(@PathParam("restaurantId") int restaurantId)
 			throws Exception {
 		Restaurant result = restaurantDao.getRestaurant(restaurantId);
-		if (result != null) {
-			return Response.status(Response.Status.OK).entity(result).build();
+		if (result == null) {
+			System.out.println("NOT FOUND");
+			throw new ApplicationException("Restaurant does not exist");
 		}
-		return Response.status(Response.Status.BAD_REQUEST).build();
+		
+			return Response.status(Response.Status.OK).entity(result).build();
+		
 	}
 
 	// Call to get menu list for a particular restaurant

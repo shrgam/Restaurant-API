@@ -1,12 +1,12 @@
 package com.zappos.sgambhir.controller;
 
-import java.io.IOException;
-import java.util.List;
-
+//import java.io.IOException;
+//import java.util.List;
+import com.zappos.sgambhir.exceptions.ApplicationException;
 import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
-import javax.ws.rs.FormParam;
+//import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.OPTIONS;
 import javax.ws.rs.POST;
@@ -17,7 +17,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import javax.ws.rs.core.Response.ResponseBuilder;
+//import javax.ws.rs.core.Response.ResponseBuilder;
 
 import com.zappos.sgambhir.dao.MenuItemDao;
 import com.zappos.sgambhir.model.MenuItem;
@@ -40,6 +40,9 @@ public class MenuItemController {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getMenuItem(@PathParam("mItemId") int mItemId) throws Exception {
 		MenuItem item = menuItemDao.getMItem(mItemId);
+		if (item == null) {
+						throw new ApplicationException("Item does not exist");
+				}
 		return Response.status(Response.Status.OK).entity(item).build();
 	}
 
