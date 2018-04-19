@@ -13,7 +13,18 @@ import com.zappos.sgambhir.exceptions.ApplicationException;
 import com.zappos.sgambhir.exceptions.ServerException;
 import com.zappos.sgambhir.model.MenuItem;
 
+/**
+ * @author Shriya
+ *
+ */
 public class MenuItemDao {
+	/**
+	 * This method returns all
+	 * menu items in a menu id
+	 * @param mId
+	 * @return
+	 * @throws Exception
+	 */
 	public List<MenuItem> getAllMenuItemsForMenu(int mId) throws Exception {
 		List<MenuItem> mItemList = null;
 
@@ -54,6 +65,14 @@ public class MenuItemDao {
 		return mItemList;
 	}
 
+	/**
+	 * This method returns the
+	 * menu item corresponding 
+	 * to the item id
+	 * @param id
+	 * @return
+	 * @throws Exception
+	 */
 	public MenuItem getMItem(int id) throws Exception {
 		MenuItem item = null;
 
@@ -89,10 +108,15 @@ public class MenuItemDao {
 			}
 		}
 
-
 		return item;
 	}
 
+	/**
+	 * This method adds an item
+	 * @param newItem
+	 * @return
+	 * @throws Exception
+	 */
 	public int addMItem(MenuItem newItem) throws Exception {
 		boolean ismItemExists = getMItem(newItem.getId()) != null;
 
@@ -141,6 +165,12 @@ public class MenuItemDao {
 		}
 	}
 
+	/**
+	 * This method updates an item
+	 * @param uItem
+	 * @return
+	 * @throws Exception
+	 */
 	public int updateMItem(MenuItem uItem) throws Exception {
 
 		boolean ismItemExists = getMItem(uItem.getId()) != null;
@@ -188,6 +218,12 @@ public class MenuItemDao {
 		}
 	}
 
+	/**
+	 * This method deletes an item
+	 * @param id
+	 * @return
+	 * @throws Exception
+	 */
 	public int deleteMItem(int id) throws Exception {
 		boolean ismItemExists = getMItem(id) != null;
 

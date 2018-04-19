@@ -4,10 +4,16 @@ import java.io.Serializable;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
+/**
+ * @author Shriya
+ *
+ */
 @XmlRootElement(name = "menuItem")
 public class MenuItem implements Serializable {
-	
-	//Attributes for entity Menu items
+
+	/**
+	 * Attributes for entity Menu items
+	 */
 	private int mItemid;
 	private String mItemName;
 	private Double mItemPrice;
@@ -16,6 +22,12 @@ public class MenuItem implements Serializable {
 	public MenuItem() {
 	}
 
+	/**
+	 * @param id
+	 * @param name
+	 * @param price
+	 * @param menuId
+	 */
 	public MenuItem(int id, String name, Double price, int menuId) {
 		this.mItemid = id;
 		this.mItemName = name;
@@ -23,37 +35,61 @@ public class MenuItem implements Serializable {
 		this.menuId = menuId;
 	}
 
+	/**
+	 * @return
+	 */
 	public int getId() {
 		return mItemid;
 	}
 
+	/**
+	 * @param id
+	 */
 	@XmlElement
 	public void setId(int id) {
 		this.mItemid = id;
 	}
 
+	/**
+	 * @return
+	 */
 	public String getName() {
 		return mItemName;
 	}
 
+	/**
+	 * @param name
+	 */
 	@XmlElement
 	public void setName(String name) {
 		this.mItemName = name;
 	}
 
+	/**
+	 * @return
+	 */
 	public Double getPrice() {
 		return mItemPrice;
 	}
 
+	/**
+	 * @param price
+	 */
 	@XmlElement
 	public void setPrice(Double price) {
 		this.mItemPrice = price;
 	}
 
+	/**
+	 * @return
+	 */
 	public int getMenuId() {
 		return menuId;
 	}
 
+	/**
+	 * @param id
+	 */
 	@XmlElement
 	public void setMenuId(int id) {
 		this.menuId = id;

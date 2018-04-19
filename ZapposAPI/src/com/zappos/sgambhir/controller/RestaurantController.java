@@ -22,21 +22,39 @@ import com.zappos.sgambhir.exceptions.ApplicationException;
 import com.zappos.sgambhir.model.Menu;
 import com.zappos.sgambhir.model.Restaurant;
 
-//call to get all restaurants
+/**
+ * @author Shriya
+ * 
+ */
 @Path("/restaurant")
 public class RestaurantController {
 
 	RestaurantDao restaurantDao = new RestaurantDao();
 	MenuDao menuDao = new MenuDao();
 
+	/**
+	 * Call to get all restaurants
+	 * 
+	 * @return
+	 * @throws Exception
+	 */
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getRestaurants() throws Exception {
 		List<Restaurant> restnts = restaurantDao.getAllRestaurants();
+		if (restnts == null || restnts.size() == 0) {
+			throw new ApplicationException("Please check. No restaurants exist");
+		}
 		return Response.status(Response.Status.OK).entity(restnts).build();
 	}
 
-	// Call to get all details of a particular restaurant
+	/**
+	 * Call to get all details of a particular restaurant
+	 * 
+	 * @param restaurantId
+	 * @return
+	 * @throws Exception
+	 */
 	@GET
 	@Path("/{restaurantId}")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -44,28 +62,39 @@ public class RestaurantController {
 			throws Exception {
 		Restaurant result = restaurantDao.getRestaurant(restaurantId);
 		if (result == null) {
-			System.out.println("NOT FOUND");
 			throw new ApplicationException("Restaurant does not exist");
 		}
-		
-			return Response.status(Response.Status.OK).entity(result).build();
-		
+		return Response.status(Response.Status.OK).entity(result).build();
 	}
 
-	// Call to get menu list for a particular restaurant
+	/**
+	 * Call to get menu list for a particular restaurant
+	 * 
+	 * @param restaurantId
+	 * @return
+	 * @throws Exception
+	 */
 	@GET
 	@Path("/{restaurantId}/menu")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getRestMenu(@PathParam("restaurantId") int restaurantId)
 			throws Exception {
 		List<Menu> resultMenu = menuDao.getAllMenusForRestaurant(restaurantId);
-		if (resultMenu != null) {
-			return Response.status(Response.Status.OK).entity(resultMenu)
-					.build();
+		if (resultMenu == null || resultMenu.size() == 0) {
+			throw new ApplicationException("Restaurant does not exist");
 		}
-		return Response.status(Response.Status.BAD_REQUEST).build();
+
+		return Response.status(Response.Status.OK).entity(resultMenu).build();
 	}
 
+	/**
+	 * Adds a restaurant
+	 * 
+	 * @param newrest
+	 * @param servletResponse
+	 * @return
+	 * @throws Exception
+	 */
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
@@ -75,6 +104,14 @@ public class RestaurantController {
 		return Response.status(Response.Status.OK).build();
 	}
 
+	/**
+	 * Updates a restaurant
+	 * 
+	 * @param uRest
+	 * @param servletResponse
+	 * @return
+	 * @throws Exception
+	 */
 	@PUT
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
@@ -84,6 +121,13 @@ public class RestaurantController {
 		return Response.status(Response.Status.OK).build();
 	}
 
+	/**
+	 * Deletes a Restaurant
+	 * 
+	 * @param restaurantId
+	 * @return
+	 * @throws Exception
+	 */
 	@DELETE
 	@Path("/{restaurantId}")
 	@Produces(MediaType.APPLICATION_JSON)

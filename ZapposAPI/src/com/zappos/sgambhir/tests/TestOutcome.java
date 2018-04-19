@@ -1,10 +1,18 @@
 package com.zappos.sgambhir.tests;
 
+/**
+ * @author Shriya
+ *
+ */
 public class TestOutcome {
 
 	private Boolean result;
 	private String output ;
 
+	/**
+	 * @param result
+	 * @param output
+	 */
 	public TestOutcome(Boolean result, String output){
 		this.result = result;
 		this.output = output;
@@ -20,6 +28,9 @@ public class TestOutcome {
 		return result;
 	}
 
+	/**
+	 * @param result
+	 */
 	public void setResult(Boolean result){
 		this.result = result;
 	}
@@ -29,6 +40,9 @@ public class TestOutcome {
 		return output ;
 	}
 
+	/**
+	 * @param reason
+	 */
 	public void setOutput(String reason){
 		this.output  = reason;
 	}

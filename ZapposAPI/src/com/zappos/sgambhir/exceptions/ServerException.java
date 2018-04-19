@@ -2,6 +2,10 @@ package com.zappos.sgambhir.exceptions;
 
 import java.io.Serializable;
 
+/**
+ * @author Shriya
+ *
+ */
 public class ServerException extends Exception implements Serializable {
 
 	private static final long serialVersionUID = 1L;

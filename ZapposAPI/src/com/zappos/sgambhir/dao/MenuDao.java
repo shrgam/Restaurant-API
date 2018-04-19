@@ -12,7 +12,18 @@ import com.zappos.sgambhir.exceptions.ServerException;
 import com.zappos.sgambhir.dbManager.DBManager;
 import com.zappos.sgambhir.model.Menu;
 
+/**
+ * @author Shriya
+ *
+ */
 public class MenuDao {
+	/**
+	 * This method returns all menus 
+	 * corresponding to a restaurant id
+	 * @param restaurantId
+	 * @return
+	 * @throws Exception
+	 */
 	public List<Menu> getAllMenusForRestaurant(int restaurantId)
 			throws Exception {
 		List<Menu> menuList = null;
@@ -40,8 +51,6 @@ public class MenuDao {
 				menuList.add(item);
 			}
 
-			conn.close();
-
 		} catch (Exception e) {
 			throw new ServerException(e.getMessage());
 		} finally {
@@ -56,6 +65,13 @@ public class MenuDao {
 		return menuList;
 	}
 
+	/**
+	 * This method returns the menu 
+	 * for given menu id
+	 * @param id
+	 * @return
+	 * @throws Exception
+	 */
 	public Menu getMenu(int id) throws Exception {
 		Menu menu = null;
 		Connection conn = null;
@@ -70,7 +86,6 @@ public class MenuDao {
 
 			String query = "SELECT * FROM menus where id =" + id;
 
-			System.out.println("query: " + query);
 			Statement st = conn.createStatement();
 			ResultSet rs = st.executeQuery(query);
 
@@ -90,16 +105,17 @@ public class MenuDao {
 				throw new ServerException(se.getMessage());
 			}
 		}
-
-		
-
 		return menu;
 	}
 
+	/**
+	 * This method adds a menu 
+	 * @param newRest
+	 * @return
+	 * @throws Exception
+	 */
 	public int addMenu(Menu newRest) throws Exception {
 		boolean isMenuExists = getMenu(newRest.getId()) != null;
-
-		System.out.println("value found in db: " + isMenuExists);
 
 		if (!isMenuExists) {
 			Connection conn = null;
@@ -111,6 +127,7 @@ public class MenuDao {
 					throw new ServerException("Connection could not be made");
 
 				}
+
 				// TODO : Auto increment
 				String query = "insert into menus (id, name,restid) values(?,?,?)";
 
@@ -120,9 +137,6 @@ public class MenuDao {
 				preparedStmt.setString(2, newRest.getName());
 				preparedStmt.setInt(3, newRest.getrestId());
 				preparedStmt.executeUpdate();
-
-				System.out.println("Insert succeeded");
-				conn.close();
 
 				return 1;
 			}
@@ -143,6 +157,11 @@ public class MenuDao {
 		}
 	}
 
+	/**
+	 * @param uMenu
+	 * @return
+	 * @throws Exception
+	 */
 	public int updateMenu(Menu uMenu) throws Exception {
 
 		boolean isMenuExists = getMenu(uMenu.getId()) != null;
@@ -166,9 +185,6 @@ public class MenuDao {
 				preparedStmt.setInt(3, uMenu.getId());
 				preparedStmt.executeUpdate();
 
-				System.out.println("Update succeeded");
-				conn.close();
-
 				return 1;
 			}
 
@@ -188,6 +204,12 @@ public class MenuDao {
 		}
 	}
 
+	/**
+	 * This method deletes a menu
+	 * @param id
+	 * @return
+	 * @throws Exception
+	 */
 	public int deleteMenu(int id) throws Exception {
 		boolean isMenuExists = getMenu(id) != null;
 		Connection conn = null;
@@ -208,9 +230,6 @@ public class MenuDao {
 
 				preparedStmt.setInt(1, id);
 				preparedStmt.execute();
-
-				System.out.println("Delete succeeded");
-				conn.close();
 
 				return 1;
 

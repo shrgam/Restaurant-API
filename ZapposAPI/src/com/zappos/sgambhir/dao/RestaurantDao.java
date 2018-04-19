@@ -12,7 +12,16 @@ import com.zappos.sgambhir.exceptions.ServerException;
 import com.zappos.sgambhir.dbManager.DBManager;
 import com.zappos.sgambhir.model.Restaurant;
 
+/**
+ * @author Shriya
+ *
+ */
 public class RestaurantDao {
+	/**
+	 * This method returns all restaurants
+	 * @return
+	 * @throws Exception
+	 */
 	public List<Restaurant> getAllRestaurants() throws Exception {
 		// Initializing a list to store all restaurants
 		List<Restaurant> restaurantList = null;
@@ -26,7 +35,7 @@ public class RestaurantDao {
 			}
 
 			String query = "select * from restaurant"; // call from table
-														// restaurant
+			// restaurant
 			Statement st = conn.createStatement();
 			ResultSet rs = st.executeQuery(query);
 
@@ -59,6 +68,13 @@ public class RestaurantDao {
 		return restaurantList;
 	}
 
+	/**
+	 * This method returns the restaurant
+	 * for given id
+	 * @param id
+	 * @return
+	 * @throws Exception
+	 */
 	public Restaurant getRestaurant(int id) throws Exception {
 		Restaurant rest = null;
 		Connection conn = null;
@@ -73,7 +89,6 @@ public class RestaurantDao {
 			String query = "SELECT name,rating, avg_price, online_delivery, number FROM test.restaurant where id ="
 					+ id;
 
-			System.out.println("query: " + query);
 			Statement st = conn.createStatement();
 			ResultSet rs = st.executeQuery(query);
 
@@ -89,7 +104,6 @@ public class RestaurantDao {
 
 			}
 
-			conn.close();
 		} catch (Exception e) {
 			throw new ServerException(e.getMessage());
 		} finally {
@@ -101,13 +115,18 @@ public class RestaurantDao {
 			}
 		}
 
+
 		return rest;
 	}
 
+	/**
+	 * This method adds a restaurant
+	 * @param newRest
+	 * @return
+	 * @throws Exception
+	 */
 	public int addRestaurant(Restaurant newRest) throws Exception {
 		boolean isRestaurantExists = getRestaurant(newRest.getId()) != null;
-
-		System.out.println("value found in db: " + isRestaurantExists);
 
 		if (!isRestaurantExists) {
 			Connection conn = null;
@@ -131,9 +150,6 @@ public class RestaurantDao {
 				preparedStmt.setString(6, newRest.getPhonenumbers());
 				preparedStmt.executeUpdate();
 
-				System.out.println("Insert succeeded");
-				conn.close();
-
 				return 1;
 			} catch (Exception e) {
 				throw new ServerException(e.getMessage());
@@ -151,6 +167,12 @@ public class RestaurantDao {
 		}
 	}
 
+	/**
+	 * This method updates a restaurant
+	 * @param uRest
+	 * @return
+	 * @throws Exception
+	 */
 	public int updateRestaurant(Restaurant uRest) throws Exception {
 
 		boolean isRestaurantExists = getRestaurant(uRest.getId()) != null;
@@ -178,9 +200,6 @@ public class RestaurantDao {
 				preparedStmt.setInt(6, uRest.getId());
 				preparedStmt.executeUpdate();
 
-				System.out.println("Update succeeded");
-				conn.close();
-
 				return 1;
 			}
 
@@ -199,6 +218,12 @@ public class RestaurantDao {
 		}
 	}
 
+	/**
+	 * This method deletes a restaurant
+	 * @param id
+	 * @return
+	 * @throws Exception
+	 */
 	public int deleteRestaurant(int id) throws Exception {
 		boolean isRestaurantExists = getRestaurant(id) != null;
 		Connection conn = null;
@@ -218,9 +243,6 @@ public class RestaurantDao {
 
 				preparedStmt.setInt(1, id);
 				preparedStmt.execute();
-
-				System.out.println("Delete succeeded");
-				conn.close();
 
 				return 1;
 			}
